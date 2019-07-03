@@ -14,7 +14,7 @@
 |Column|Type|Options|
 |------|----|-------|
 |title|string|null: false, index: true|
-|post|text|null: false|
+|text|text|null: false|
 |good|integer||
 
 ### Association

@@ -1,0 +1,9 @@
+%section{class: "post"}
+  .post__text=@post.text
+  .post__btn--show="詳細"
+  .post__btn--edit="編集"
+  .post__btn--destroy="削除"
+  .post--good
+    =button_tag "いいね", class: "post__btn--good" do
+      = fa_icon 'cog', class: "post__btn--icon"
+    
