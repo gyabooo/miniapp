@@ -70,4 +70,6 @@ gem 'haml-rails'
 gem 'devise-i18n'
 gem 'rails-i18n'
 gem "font-awesome-rails"
-gem 'materialize-sass', '~> 1.0.0'
+gem 'materialize-sass'
+gem "material_icons"
+gem 'mini_magick', '~> 4.8'

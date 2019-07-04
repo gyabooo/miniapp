@@ -1,9 +1,16 @@
-%section{class: "post"}
-  .post__text=@post.text
-  .post__btn--show="詳細"
-  .post__btn--edit="編集"
-  .post__btn--destroy="削除"
-  .post--good
-    =button_tag "いいね", class: "post__btn--good" do
-      = fa_icon 'cog', class: "post__btn--icon"
+.card.col.s4
+  .card-title.post__title=post.title
+  .divider
+  .card-content
+    - if post.text.scan("\n").count > 1
+      .post__text=simple_format(h(post.text.split("\n")[0])) + "\n...more"
+    - else
+      .post__text=simple_format(h(post.text).truncate(20, omission: "\n...more"))
+  = link_to "#", class: "post__btn--good" do
+    %i{class: "Tiny material-icons post__btn--icon"} thumb_up
+  .card-action
+    =link_to "詳細", post_path(post), class: 'default-btn'
+    - if user_signed_in? && post.user_id == current_user.id
+      =link_to "編集", edit_post_path(post), class: 'default-btn'
+      =link_to "削除", "/posts/#{post.id}", method: :delete, class: 'default-btn'
     

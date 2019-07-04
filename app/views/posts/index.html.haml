@@ -1,15 +1,4 @@
-.wrap
-  %nav{class: "header blue lighten-2"}
-    .header--left.brand-logo.center="Blog"
-    %ul{class: "right hide-on-med-and-down"}
-      - unless user_signed_in?
-        %li{class: "header__btn header__btn--signin"}
-          = link_to "ログイン", new_user_session_path
-      - if user_signed_in?
-        %li{class: "header__btn header__btn--signout"}
-          = link_to "ログアウト", destroy_user_session_path, method: :delete
-      %li{class: "header__btn header__btn--new"}
-        = link_to "新規投稿", new_post_path
-  %article{class: "posts"}
+%article{class: "posts"}
+  .row
     = render @posts
-  %footer{class: "page-footer blue lighten-2"}
+-# %footer{class: "page-footer blue lighten-2"}

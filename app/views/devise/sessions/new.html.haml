@@ -1,27 +1,21 @@
-
 .container
   .card
-    %h2{class: "brand-logo"} ログイン
     .card-content
-      .divider
+      %h2{class: "card-title"} ログイン
       = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        = render "devise/shared/error_messages", resource: resource
+        .divider
         .input-field
           = f.label :email
-          %br/
           = f.email_field :email, autofocus: true, autocomplete: "email"
         .input-field
           = f.label :password
-          %br/
           = f.password_field :password, autocomplete: "current-password"
         - if devise_mapping.rememberable?
           .field
             %label
               = f.check_box :remember_me, id: "remember_id"
-              -# - binding.pry
               %span ログインを記憶する
-            -# %input{type: "checkbox", name: "user[remember_me]", id: "user_remember_me"}
-            -# %label{for: "user_remember_me"} "save"
-            
         .actions
-          = f.submit "ログイン", class: 'btn blue lighten-2 waves-effect waves-light'
+          = f.submit "ログイン", class: 'default-btn'
       = render "devise/shared/links"

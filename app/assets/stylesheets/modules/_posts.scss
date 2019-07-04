@@ -1,6 +1,61 @@
 .posts {
   height: 100%;
   width: 100%;
-  // background-color: #fff;
+  padding: 0 20px;
   overflow-y: scroll;
+
+  .row {
+    .card {
+      height: 300px;
+    }
+  }
+}
+
+.post {
+  &--textarea {
+    min-height: 300px;
+    padding: 10px;
+  }
+
+  &__btn {
+    display: flex;
+    &--good {
+      background: none;
+      border: none;
+      outline: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      display: block;
+      text-align: right;
+    }
+    &--icon {
+      color: rgb(0, 119, 255);
+    }
+  }
+
+  &__text {
+    padding: 10px;
+    height: 100px;
+  }
+
+  &__detail {
+    min-height: 500px;
+
+    &--header {
+
+    }
+    &--title {
+      font-size: 60px;
+      
+    }
+    &--date {
+      text-align: right;
+    }
+    &--text {
+      padding: 10px;
+      font-size: 20px;
+    }
+  }
+
 }

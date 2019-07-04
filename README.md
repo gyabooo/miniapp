@@ -16,6 +16,7 @@
 |title|string|null: false, index: true|
 |text|text|null: false|
 |good|integer||
+|user|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user

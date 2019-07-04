@@ -1,0 +1,4 @@
+.default-btn {
+  @extend .btn, .blue, .lighten-2, .waves-effect, .waves-light;
+  color: #fff;
+}
