@@ -4,6 +4,7 @@ ja:
     attributes:
       user:
         name: 名前
+        avatar: アバター
       post:
         title: タイトル
         text: 内容

@@ -1,0 +1,22 @@
+.avatar_upload_btn {
+  margin-bottom: 10px;
+}
+
+#preview_box {
+  display: flex;
+  // justify-content: space-between;
+}
+
+#preview_avatar {
+  max-width: 640px;
+  max-height: 640px;
+  margin-right: 20px;
+}
+
+#preview_image {
+  max-width: 100%;
+}
+
+.cropper-view-box, .cropper-face {
+  border-radius: 50%;
+}

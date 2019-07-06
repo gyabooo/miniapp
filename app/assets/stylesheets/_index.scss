@@ -13,8 +13,13 @@
   margin-top: 20px;
 }
 
+.hidden {
+  display: none;
+}
+
 @import "modules/header";
 @import "modules/posts";
 @import "modules/footer";
-@import "modules/login";;
+@import "modules/devise";
 @import "modules/flash";
+@import "modules/avatar";

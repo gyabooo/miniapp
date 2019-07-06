@@ -20,8 +20,13 @@
           = f.label :password_confirmation
           = f.password_field :password_confirmation, autocomplete: "new-password"
         .field
-          = f.label :avatar
-          = f.file_field :avatar
+          = f.label :avatar, id: 'avatar_upload_label' do
+            .avatar_upload_btn.default-btn="アバターアップロード"
+            = f.file_field :avatar, class: 'hidden'
+          #preview_box
+            #preview_avatar
+            #preview_result_box
+              #preview_result
         .actions
           = f.submit "アカウント作成", class: 'default-btn'
       = render "devise/shared/links"

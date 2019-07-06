@@ -73,3 +73,5 @@ gem "font-awesome-rails"
 gem 'materialize-sass'
 gem "material_icons"
 gem 'mini_magick', '~> 4.8'
+# gem 'cropper-rails'
+gem 'jquery-rails'
