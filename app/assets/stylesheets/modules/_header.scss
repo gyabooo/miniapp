@@ -1,18 +1,15 @@
 .header {
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-between;
-  // height: 50px;
-  // width: 100%;
-  // background-color: #aaa;
-
-  &--left {
-    // margin-left: 30px;
+  &__user-lists {
+    margin-right: 30px;
+    i.material-icons {
+      display: block;
+      height: 64px;
+      line-height: 64px;
+    }
   }
 
-  &--right {
-    // display: flex;
-    // padding-right: 50px;
+  &__user-containar {
+    margin-right: 30px;
   }
 
   &__btn {

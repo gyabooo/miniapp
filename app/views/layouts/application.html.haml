@@ -12,16 +12,21 @@
       %nav{class: "header blue lighten-2"}
         .header--left.brand-logo.center
           = link_to "BLOG", root_path
-        %ul{class: "right hide-on-med-and-down"}
+        = link_to '#', class: 'right dropdown-trigger header__user-lists', "data-target": 'dropdown-list' do
+          %i{class: 'material-icons'} menu
+        %ul{class: "dropdown-content", id: 'dropdown-list'}
           - unless user_signed_in?
             %li{class: "header__btn header__btn--signin"}
               = link_to "ログイン", new_user_session_path
           - if user_signed_in?
-            %li{class: "header__name"}
-              = image_tag current_user.avatar.variant(resize:"60x60").processed if current_user.avatar.attached?
             %li{class: "header__btn header__btn--signout"}
               = link_to "ログアウト", destroy_user_session_path, method: :delete
           %li{class: "header__btn header__btn--new"}
             = link_to "新規投稿", new_post_path
+        - if user_signed_in?
+          %ul{class: "right header__user-containar"}
+            %li{class: 'header__user-avatar'}
+              = image_tag current_user.avatar if current_user.avatar.attached? 
+            %li{class: 'header__username'}="#{current_user.name}"
       = render 'shared/flash'
       = yield

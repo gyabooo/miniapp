@@ -1,5 +1,56 @@
 $(function () {
 
+  function dataURLtoFile(data_url, filename) {
+    // // var base64 = window.btoa(data_url);
+    // var mime_ctype = data_url.match(/(:)([a-z\/]+)(;)/)[2];
+
+    // // // 日本語の文字化けに対処するためBOMを作成する。
+    // var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+
+    // // var bin = atob(base64.replace(/^.*,/, ''));
+    // var bin = atob(data_url.split(",")[1]);
+    // var buffer = new Uint8Array(bin.length);
+    // for (var i = 0; i < bin.length; i++) {
+    //   buffer[i] = bin.charCodeAt(i);
+    // }
+    // // Blobを作成
+    // var blob = new Blob([bom, buffer.buffer], {
+    //   type: mime_ctype,
+    // });
+    // // Fileオブジェクトのプロパティを追加
+    // blob.lastModifiedDate = new Date();
+    // blob.name = filename;
+    // debugger;
+
+    // バイナリに変換
+    var byteString = atob(data_url.split(",")[1]);
+
+    // MIMEタイプ
+    var mimeType = data_url.match(/(:)([a-z\/]+)(;)/)[2];
+
+    // バイナリからBlobを作成
+    for (var i = 0, l = byteString.length, content = new Uint8Array(l); l > i; i++) {
+      content[i] = byteString.charCodeAt(i);
+    }
+
+    var blob = new Blob([content], {
+      type: mimeType,
+    });
+    blob.lastModifiedDate = new Date();
+    blob.name = filename;
+    // debugger;
+
+    return blob;
+  }
+
+  function changeFormDatafotAvatar(formData) {
+    var newFormData = new FormData(formData);
+    var filename = newFormData.get('user[avatar]').name;
+    var data_url = $("#preview_trim_avatar").attr('src');
+    newFormData.delete('user[avatar]');
+    newFormData.append('user[avatar]', dataURLtoFile(data_url, filename), filename);
+  }
+
   function getRoundedCanvas(sourceCanvas) {
     var canvas = document.createElement('canvas');
     resizeImage(sourceCanvas, canvas, 64);
@@ -12,7 +63,6 @@ $(function () {
     context.fill();
     return canvas;
   }
-
 
   function resizeImage(image_or_canvas, canvas, size=320) {
     var context = canvas.getContext('2d');
@@ -30,6 +80,7 @@ $(function () {
   }
 
   $(document).on('turbolinks:load', function (e) {
+
     var is_cropper = false;
     var cropper;
     var preview_avatar = $('#preview_avatar');
@@ -53,6 +104,7 @@ $(function () {
         preview_result.before($('<label>').text('プレビュー').attr('id', 'preview_trim_label'));
       }
       cropping(e);
+      changeFormDatafotAvatar();
     });
     //画像をドラッグした際の処理
     preview_image[0].addEventListener('cropend', function (e) {
@@ -62,6 +114,7 @@ $(function () {
     preview_image[0].addEventListener('zoom', function (e) {
       cropping(e);
     });
+
 
     $("#new_user").on("change", '#user_avatar', function (e) {
 
@@ -75,6 +128,7 @@ $(function () {
         $('#preview_trim_label').remove();
         return false;
       }
+      // 画像かどうかの判別追加
 
       var reader = new FileReader();
       preview_image.attr("title", file.name);
@@ -101,6 +155,45 @@ $(function () {
         upload_image.src = e.target.result;
       }
       reader.readAsDataURL(file);
+    });
+
+
+    $('#new_user').on('submit', function (e) {
+      e.preventDefault();
+      
+      var formData = new FormData(this);
+      var filename = formData.get('user[avatar]').name;
+      var data_url = $("#preview_trim_avatar").attr('src');
+      formData.delete('user[avatar]');
+      formData.append('user[avatar]', dataURLtoFile(data_url, filename), filename);
+      
+      // debugger;
+      // var url = $(this).attr('action');
+      debugger;
+      // $.ajax({
+      //   url: url,
+      //   type: 'POST',
+      //   data: formData,
+      //   processData: false,
+      //   contentType: false
+      // })
+      //   .done(function (data, textStatus, jqXHR) {
+      //     debugger;
+      //     if (data.match(/DOCTYPE/)) {
+      //       // $.empty();
+      //     }
+      //     debugger;
+      //     // anchor = document.createElement("a");
+      //     // anchor.href = URL.createObjectURL(dataURLtoFile(data_url, filename));
+      //     // preview_result.append(anchor);
+      //   // window.location.href = '/'
+      // })
+      //   .fail(function () {
+      //     // debugger;
+      //   alert('新規ユーザー作成に失敗しました');
+      //   $(".default-btn").prop("disabled", false);
+      // })
+      // debugger;
     });
 
   });
