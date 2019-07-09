@@ -1,10 +1,15 @@
 $(function () {
 
   $(document).on('turbolinks:load', function (e) {
-    var elems = document.querySelectorAll('.dropdown-trigger');
-    var instances = M.Dropdown.init(elems, { coverTrigger: false, constrainWidth: false});
+    var dropdown_elems = document.querySelectorAll('.dropdown-trigger');
+    var dropdown_instances = M.Dropdown.init(dropdown_elems, { coverTrigger: false, constrainWidth: false});
+
+    M.Modal._count = 0;
+    var modal_elems = document.querySelectorAll('.modal');
+    var modal_instances = M.Modal.init(modal_elems);
   });
 
+  
 })
 
 

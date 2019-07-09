@@ -1,27 +1,6 @@
 $(function () {
 
   function dataURLtoFile(data_url, filename) {
-    // // var base64 = window.btoa(data_url);
-    // var mime_ctype = data_url.match(/(:)([a-z\/]+)(;)/)[2];
-
-    // // // 日本語の文字化けに対処するためBOMを作成する。
-    // var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-
-    // // var bin = atob(base64.replace(/^.*,/, ''));
-    // var bin = atob(data_url.split(",")[1]);
-    // var buffer = new Uint8Array(bin.length);
-    // for (var i = 0; i < bin.length; i++) {
-    //   buffer[i] = bin.charCodeAt(i);
-    // }
-    // // Blobを作成
-    // var blob = new Blob([bom, buffer.buffer], {
-    //   type: mime_ctype,
-    // });
-    // // Fileオブジェクトのプロパティを追加
-    // blob.lastModifiedDate = new Date();
-    // blob.name = filename;
-    // debugger;
-
     // バイナリに変換
     var byteString = atob(data_url.split(",")[1]);
 
@@ -38,7 +17,6 @@ $(function () {
     });
     blob.lastModifiedDate = new Date();
     blob.name = filename;
-    // debugger;
 
     return blob;
   }
@@ -80,6 +58,10 @@ $(function () {
   }
 
   $(document).on('turbolinks:load', function (e) {
+    var current_url = location.pathname;
+    var target_url_regex = new RegExp("/users/sign_in/|/users/edit");
+
+    if (!current_url.match(target_url_regex)) return false;
 
     var is_cropper = false;
     var cropper;
@@ -166,27 +148,41 @@ $(function () {
       var data_url = $("#preview_trim_avatar").attr('src');
       formData.delete('user[avatar]');
       formData.append('user[avatar]', dataURLtoFile(data_url, filename), filename);
-      
       // debugger;
-      // var url = $(this).attr('action');
+      // $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+      //   var token;
+      //   if (!options.crossDomain) {
+      //     token = $('meta[name="csrf-token"]').attr('content');
+
+      //     if (token) {
+      //       return jqXHR.setRequestHeader('X-CSRF-Token', token);
+      //     };
+      //   };
+      // });
+
+      // debugger;
+      var url = $(this).attr('action');
+      // debugger;
+      $.ajax({
+        url: url,
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false
+      });
+
       debugger;
-      // $.ajax({
-      //   url: url,
-      //   type: 'POST',
-      //   data: formData,
-      //   processData: false,
-      //   contentType: false
-      // })
       //   .done(function (data, textStatus, jqXHR) {
-      //     debugger;
-      //     if (data.match(/DOCTYPE/)) {
+      //     // debugger;
+      //     // if (data.match(/DOCTYPE/)) {
       //       // $.empty();
-      //     }
-      //     debugger;
+      //     // }
+      //     // debugger;
       //     // anchor = document.createElement("a");
       //     // anchor.href = URL.createObjectURL(dataURLtoFile(data_url, filename));
       //     // preview_result.append(anchor);
       //   // window.location.href = '/'
+          
       // })
       //   .fail(function () {
       //     // debugger;

@@ -12,5 +12,14 @@
     =link_to "詳細", post_path(post), class: 'default-btn'
     - if user_signed_in? && post.user_id == current_user.id
       =link_to "編集", edit_post_path(post), class: 'default-btn'
-      =link_to "削除", "/posts/#{post.id}", method: :delete, class: 'default-btn'
-    
+      =link_to "削除", "#destroy_modal_#{post.id}", class: 'modal-trigger default-btn'
+
+  %div{id: "destroy_modal_#{post.id}", class: "modal modal-fixed-footer"}
+    .modal-content
+      %h4="本当に削除しますか？"
+      .post__title=post.title
+      .divider
+      .post__text=simple_format(post.text)
+    .modal-footer
+      = link_to 'キャンセル', '#!', class: "modal-close btn-flat"
+      = link_to "削除", "/posts/#{post.id}", method: :delete, class: 'default-btn'
