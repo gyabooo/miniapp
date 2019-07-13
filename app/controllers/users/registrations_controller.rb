@@ -23,13 +23,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     super
-    # binding.pry
     if user_params[:avatar].present?
       if user_params[:avatar].kind_of?(ActionDispatch::Http::UploadedFile)
         current_user.avatar.purge_later
         current_user.avatar.attach(user_params[:avatar])
       end
-    elsif user_params[:avatar].blank?
+    else
       current_user.avatar.purge
     end
   end
@@ -77,7 +76,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
   def user_params
-    # binding.pry
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar)
   end
 

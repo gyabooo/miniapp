@@ -19,5 +19,5 @@
         %td="#{Post.post_count(modal_user.id)}"
   .modal-footer
     = link_to '閉じる', '#!', class: "modal-close btn-flat"
-    - if modal_user.id === current_user.id
+    - if user_signed_in? && modal_user.id === current_user.id
       = link_to "アカウント編集", edit_user_registration_path, class: 'default-btn'

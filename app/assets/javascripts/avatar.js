@@ -71,8 +71,7 @@ $(function () {
     var preview_result = $('#preview_result');
     var preview_image = $('<img>').attr("id", "preview_image");
 
-
-    function createFormData(controller_method) {
+    function createFormData() {
       var formData = new FormData();
       if ($('#preview_hidden_trim_avatar').length) {
         var filename = preview_image.attr('title');
@@ -82,24 +81,16 @@ $(function () {
         } else {
           formData.append('user[avatar]', dataURLtoFile(data_url, filename), filename);
         }
-      } else {
-        formData.append('user[avatar]', '');
       }
       var username = $('#user_name').val();
       var email = $('#user_email').val();
       var password = $('#user_password').val();
       var password_confirm = $('#user_password_confirmation').val();
 
-
       formData.append('user[name]', username);
       formData.append('user[email]', email);
       formData.append('user[password]', password);
       formData.append('user[password_confirmation]', password_confirm);
-      // if (controller_method === 'edit_user') {
-      //   var current_password = $('#user_current_password').val();
-      //   formData.append('user[current_password]', current_password);
-      // }
-      // debugger;
 
       return formData;
     }
@@ -120,7 +111,6 @@ $(function () {
       hidden_image = $('<img>').attr({
         src: hidden_canvas.toDataURL(),
         id: 'preview_hidden_trim_avatar',
-        // style: 'visibility:hidden'
       });
       preview_result.append(hidden_image[0]);
     }
@@ -141,9 +131,9 @@ $(function () {
     });
 
     /*
-      新規アカウント作成の場合
+      新規アカウント作成,更新の場合
     */
-    $("#new_user").on("change", '#user_avatar', function (e) {
+    $("#new_user,#edit_user").on("change", '#user_avatar', function (e) {
 
       var file = event.target.files[0];
       if (is_cropper) {
@@ -151,63 +141,10 @@ $(function () {
       }
       // キャンセルボタンを押した時
       if (file === undefined) {
-        preview_avatar.empty();
-        preview_result.empty();
-        $('#preview_trim_title').remove();
-        return false;
-      }
-      // 画像かどうかの判別追加
-      var imageType = /image.*/;
-      if (!file.type.match(imageType)) {
-        preview_avatar.empty();
-        preview_result.empty();
-        $('#preview_trim_label').remove();
-        alert('イメージ画像ではありません。');
-        return false;
-      }
-
-      var reader = new FileReader();
-      preview_image.attr("title", file.name);
-      preview_avatar.empty();
-      preview_avatar.append($('<lebal>').text('画像をトリミングしてください'));
-
-      reader.onload = function (e) {
-        var canvas = document.createElement('canvas');
-        var upload_image = new Image();
-
-        upload_image.onload = function (event) {
-          resizeImage(upload_image, canvas);
-          $(preview_image).attr('src', canvas.toDataURL());
-          preview_avatar.append(preview_image[0]);
-          // debugger;
-
-          cropper = new Cropper(preview_image[0], {
-            aspectRatio: 1,
-            viewMode: 1,
-            ready: function () {
-              is_cropper = true;
-            }
-          })
+        if (controller_method === 'new_user') {
+          preview_result.empty();
         }
-        upload_image.src = e.target.result;
-      }
-      reader.readAsDataURL(file);
-    });
-
-    /*
-      アカウント更新の場合
-    */
-    $("#edit_user").on("change", '#user_avatar', function (e) {
-      $('#preview_hidden_trim_avatar').remove();
-
-      var file = event.target.files[0];
-      if (is_cropper) {
-        cropper.destroy();
-      }
-      // キャンセルボタンを押した時
-      if (file === undefined) {
         preview_avatar.empty();
-        // preview_result.empty();
         $('#preview_trim_title').remove();
         return false;
       }
@@ -234,7 +171,6 @@ $(function () {
           resizeImage(upload_image, canvas);
           $(preview_image).attr('src', canvas.toDataURL());
           preview_avatar.append(preview_image[0]);
-          // debugger;
 
           cropper = new Cropper(preview_image[0], {
             aspectRatio: 1,
@@ -262,7 +198,7 @@ $(function () {
         };
       });
 
-      var formData = createFormData(controller_method);
+      var formData = createFormData();
       $.ajax({
         url: '/users',
         type: http_method,
@@ -292,6 +228,7 @@ $(function () {
 
     })
 
+    // 削除ボタンが押された場合
     $('#avatar_box').on('click', "#avatar_delete_btn", function () {
       if (is_cropper) {
         cropper.destroy();
@@ -301,7 +238,21 @@ $(function () {
       $('#preview_trim_title').remove();
       preview_avatar.empty();
       preview_result.empty();
+      
+      var user_name, user_email, user_password, user_password_confirm
+      if (controller_method === 'new_user') {
+        user_name = $("#user_name").val();
+        user_email = $("#user_email").val();
+        user_password = $("#user_password").val();
+        user_password_confirm = $("#user_password_confirmation").val();
+      }
       $(`#${controller_method}`)[0].reset();
+      if (controller_method === 'new_user') {
+        $("#user_name").val(user_name);
+        $("#user_email").val(user_email);
+        $("#user_password").val(user_password);
+        $("#user_password_confirmation").val(user_password_confirm);
+      }
     })
   });
 

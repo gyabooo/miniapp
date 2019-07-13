@@ -10,6 +10,8 @@ $(function () {
 
     var tooltipped_elems = document.querySelectorAll('.tooltipped');
     var tooltipped_instances = M.Tooltip.init(tooltipped_elems);
+
+    $(".flash-msg").delay(1500).fadeOut(1000);
   });
 
   $(document).on("turbolinks:before-cache", function () {

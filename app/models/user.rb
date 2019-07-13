@@ -11,13 +11,14 @@ class User < ApplicationRecord
     validate :create_validate_avatar
   end
 
-  # binding.pry
   def create_validate_avatar
-    # binding.pry
     return unless avatar.attached?
     if name.blank? || password.blank? || password_confirmation.blank?
       avatar.purge
     end
   end
 
+  def remember_me
+    true
+  end
 end

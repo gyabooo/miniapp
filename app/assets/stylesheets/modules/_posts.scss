@@ -34,18 +34,15 @@
       width: 100%;
       padding-right: 44px;
     }
-
   }
   &__btn {
     display: flex;
     justify-content: space-between;
   }
-
   &__text {
     padding: 10px;
     height: 100px;
   }
-
   &__detail {
     min-height: 500px;
 
@@ -60,10 +57,10 @@
       font-size: 20px;
     }
   }
-
   &__user {
     &--title {
       width: 100%;
+      height: $modal_title_height;
       .avatar {
         @include modal_post_icon();
       }
@@ -71,10 +68,10 @@
     &--username {
       text-align: center;
       width: 100%;
+      line-height: $modal_title_height;
       color: #fff;
     }
   }
-
   &__date {
     text-align: right;
     margin-right: 10px;
