@@ -15,18 +15,26 @@
         = link_to '#', class: 'right dropdown-trigger header__user-lists', "data-target": 'dropdown-list' do
           %i{class: 'material-icons'} menu
         %ul{class: "dropdown-content", id: 'dropdown-list'}
-          - unless user_signed_in?
-            %li{class: "header__btn header__btn--signin"}
-              = link_to "ログイン", new_user_session_path
           - if user_signed_in?
             %li{class: "header__btn header__btn--signout"}
               = link_to "ログアウト", destroy_user_session_path, method: :delete
-          %li{class: "header__btn header__btn--new"}
-            = link_to "新規投稿", new_post_path
+            %li{class: "header__btn header__btn--edit"}
+              = link_to "アカウント編集", edit_user_registration_path
+            %li{class: "header__btn header__btn--new"}
+              = link_to "新規投稿", new_post_path
+          - else
+            %li{class: "header__btn header__btn--signin"}
+              = link_to "ログイン", new_user_session_path
+            %li{class: "header__btn header__btn--signup"}
+              = link_to "新規アカウント作成", new_user_registration_path
         - if user_signed_in?
           %ul{class: "right header__user-containar"}
             %li{class: 'header__user-avatar'}
-              = image_tag current_user.avatar if current_user.avatar.attached? 
+              = link_to "#user_modal_#{current_user.id}", class: "header__user--modal modal-trigger" do
+                - if current_user.avatar.attached? 
+                  = image_tag current_user.avatar, class: 'avatar-icon'
+                - else
+                  .avatar-icon.btn-floating.btn-large=current_user.name
             %li{class: 'header__username'}="#{current_user.name}"
         - else
           %ul{class: "right header__user-containar"}

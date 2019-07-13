@@ -2,36 +2,43 @@
   height: 100%;
   width: 100%;
   padding: 0 20px;
-  overflow-y: scroll;
-
-  .row {
-    .card {
-      height: 300px;
-    }
-  }
 }
 
 .post {
+  .avatar {
+    @include post_header_icon();
+  }
+  &__btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - #{$post_header_height} - 14px);
+    padding-left: 4px;
+  }
   &--textarea {
     min-height: 300px;
     padding: 10px;
   }
+  &__title {
+    height: $post_header_height;
+    width: 100%;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;  
+    p {
+      width: 100%;
+      text-align: center;
+      color: white;
+    }
+    a {
+      width: 100%;
+      padding-right: 44px;
+    }
 
+  }
   &__btn {
     display: flex;
-    &--good {
-      background: none;
-      border: none;
-      outline: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      display: block;
-      text-align: right;
-    }
-    &--icon {
-      color: rgb(0, 119, 255);
-    }
+    justify-content: space-between;
   }
 
   &__text {
@@ -42,12 +49,8 @@
   &__detail {
     min-height: 500px;
 
-    &--header {
-
-    }
     &--title {
-      font-size: 60px;
-      
+      font-size: 40px;
     }
     &--date {
       text-align: right;
@@ -58,4 +61,23 @@
     }
   }
 
+  &__user {
+    &--title {
+      width: 100%;
+      .avatar {
+        @include modal_post_icon();
+      }
+    }
+    &--username {
+      text-align: center;
+      width: 100%;
+      color: #fff;
+    }
+  }
+
+  &__date {
+    text-align: right;
+    margin-right: 10px;
+    margin-bottom: 5px;
+  }
 }

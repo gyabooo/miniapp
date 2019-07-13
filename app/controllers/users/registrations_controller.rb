@@ -4,29 +4,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
+
   # GET /resource/sign_up
   # def new
   #   super
   # end
 
   # POST /resource
-  def create
-    # binding.pry
-    @user = User.new(user_params)
-    # binding.pry
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to root_path, notice: 'アカウント作成に成功しました'}
-        format.js { render ajax_redirect_to(root_path), notice: 'アカウント作成に成功しました'}
-      else
-        format.html { render :new }
-        format.js { 
-          render :new
-          # binding.pry
-        }
-      end
-    end
-  end
+  # def create
+  #   super
+  # end
 
   # GET /resource/edit
   # def edit
@@ -34,9 +21,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    super
+    # binding.pry
+    if user_params[:avatar].present?
+      if user_params[:avatar].kind_of?(ActionDispatch::Http::UploadedFile)
+        current_user.avatar.purge_later
+        current_user.avatar.attach(user_params[:avatar])
+      end
+    elsif user_params[:avatar].blank?
+      current_user.avatar.purge
+    end
+  end
 
   # DELETE /resource
   # def destroy
@@ -74,12 +70,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
 
+  protected
+  def update_resource(resource, params)
+    resource.update_without_password(params)
+  end
+
   private
   def user_params
+    # binding.pry
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar)
   end
 
-  def ajax_redirect_to(redirect_uri)
-    { js: "window.location.replace('#{redirect_uri}');" }
-  end
 end

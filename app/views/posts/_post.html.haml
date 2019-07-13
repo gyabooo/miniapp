@@ -1,25 +1,39 @@
-.card.col.s4
-  .card-title.post__title=post.title
-  .divider
-  .card-content
-    - if post.text.scan("\n").count > 1
-      .post__text=simple_format(h(post.text.split("\n")[0])) + "\n...more"
-    - else
-      .post__text=simple_format(h(post.text).truncate(20, omission: "\n...more"))
-  = link_to "#", class: "post__btn--good" do
-    %i{class: "Tiny material-icons post__btn--icon"} thumb_up
-  .card-action
-    =link_to "詳細", post_path(post), class: 'default-btn'
-    - if user_signed_in? && post.user_id == current_user.id
-      =link_to "編集", edit_post_path(post), class: 'default-btn'
-      =link_to "削除", "#destroy_modal_#{post.id}", class: 'modal-trigger default-btn'
+.col.s12.m6.l4.post
+  .card.horizontal
+    .card-side
+      .avatar.blue.lighten-2
+        - if post.user.avatar.attached?
+          = link_to "#user_modal_#{post.user.id}", class: "modal-trigger" do
+            = image_tag post.user.avatar, class: 'avatar-icon btn-floating btn-large tooltipped', "data-position": "right", "data-tooltip": "#{post.user.name}"
+        - else
+          = link_to "#user_modal_#{post.user.id}", class: "modal-trigger" do
+            .avatar-icon.btn-floating.btn-large.tooltipped{"data-position": "right", "data-tooltip": "#{post.user.name}"}=post.user.name
+      .post__btns
+        = link_to post_path(post), class: 'btn-floating light-blue lighten-2 tooltipped', "data-position": "right", "data-tooltip": "詳細" do
+          %i{class: 'material-icons'} description
+        - if user_signed_in? && post.user_id == current_user.id
+          = link_to edit_post_path(post), class: 'btn-floating yellow darken-1 tooltipped', "data-position": "right", "data-tooltip": "編集" do
+            %i{class: 'material-icons'} edit
+          = link_to "#destroy_modal_#{post.id}", class: 'btn-floating red lighten-2 modal-trigger tooltipped', "data-position": "right", "data-tooltip": "削除" do
+            %i{class: 'material-icons'} delete
+    .card-stacked
+      .card-title.post__title.blue.lighten-2<>
+        =link_to post_path(post) do
+          %p="#{post.title}"
+      .card-content
+        - if post.text.scan("\n").count > 1
+          .post__text=simple_format(h(post.text.split("\n")[0])) + "\n...more"
+        - else
+          .post__text=simple_format(h(post.text).truncate(20, omission: "\n...more"))
+      .card-footer
+        .post__date.blue-grey-text.text-lighten-3="#{post.created_at.strftime("%Y/%m/%d(%a) %H:%M:%S")}"
 
-  %div{id: "destroy_modal_#{post.id}", class: "modal modal-fixed-footer"}
-    .modal-content
-      %h4="本当に削除しますか？"
-      .post__title=post.title
-      .divider
-      .post__text=simple_format(post.text)
-    .modal-footer
-      = link_to 'キャンセル', '#!', class: "modal-close btn-flat"
-      = link_to "削除", "/posts/#{post.id}", method: :delete, class: 'default-btn'
+      %div{id: "destroy_modal_#{post.id}", class: "modal modal-fixed-footer"}
+        .modal-content
+          %h4="本当に削除しますか？"
+          .post__title=post.title
+          .divider
+          .post__text=simple_format(post.text)
+        .modal-footer
+          = link_to 'キャンセル', '#!', class: "modal-close btn-flat"
+          = link_to "削除", "/posts/#{post.id}", method: :delete, class: 'red default-btn'

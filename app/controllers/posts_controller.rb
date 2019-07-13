@@ -4,7 +4,8 @@ class PostsController < ApplicationController
   before_action :redirect_index, only: [:edit, :update, :destroy]
 
   def index
-    @posts = Post.order("created_at DESC")
+    @posts = Post.includes(:user).paginate(page: params[:page], per_page: 6).order("created_at DESC")
+    @custom_paginate_renderer = custom_paginate_renderer
   end
 
   # def show

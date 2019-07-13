@@ -1,9 +1,9 @@
-.container
+.container.card--medium
   .card
     .card-content
-      %h2{class: "card-title"} 新規アカウント作成
       = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-        = render "devise/shared/error_messages", resource: resource
+        %h2{class: "card-title"}="#{render_name}"
+        = render "users/shared/error_messages", resource: resource
         .divider
         .input-field
           = f.label :name
@@ -19,14 +19,24 @@
         .input-field
           = f.label :password_confirmation
           = f.password_field :password_confirmation, autocomplete: "new-password"
-        .field
+        .field#avatar_box
           = f.label :avatar, id: 'avatar_upload_label' do
             .avatar_upload_btn.default-btn="アバターアップロード"
             = f.file_field :avatar, class: 'hidden'
+          #avatar_delete_btn.default-btn="アバター削除"
           #preview_box
             #preview_avatar
             #preview_result_box
-              #preview_result
+              - if @user.avatar.attached?
+                #preview_trim_title='プレビュー'
+                #preview_result
+                  =image_tag @user.avatar, id: 'preview_trim_avatar'
+                  =image_tag @user.avatar, id: 'preview_hidden_trim_avatar'
+              - else
+                #preview_result
         .actions
-          = f.submit "アカウント作成", class: 'default-btn'
-      = render "devise/shared/links"
+          #user_submit_btn.default-btn="#{render_name}"
+      = render "users/shared/links"
+      - if type.include?("edit")
+        = button_to "アカウント削除", registration_path(resource_name), class: 'red default-btn', data: { confirm: "アカウントを削除して良いですか?" }, method: :delete
+      = link_to "戻る", :back, class: 'btn-small'

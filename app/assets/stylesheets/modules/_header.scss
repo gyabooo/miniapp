@@ -1,15 +1,36 @@
 .header {
+  height: 70px;
+  margin-bottom: 15px;
   &__user-lists {
     margin-right: 30px;
     i.material-icons {
       display: block;
-      height: 64px;
-      line-height: 64px;
+      height: 100%;
+      line-height: 70px;
     }
   }
 
   &__user-containar {
     margin-right: 30px;
+    height: 100%;
+  }
+
+  &__user-avatar {
+    height: 100%;
+    margin-right: 10px;
+    display:table-cell;
+    img {
+      vertical-align:middle;
+    }
+    a {
+      text-decoration: none;
+    }
+  }
+  &__user--modal {
+    height: 100%;
+  }
+  &__username {
+    height: 100%;
   }
 
   &__btn {

@@ -1,4 +1,20 @@
-.default-btn {
-  @extend .btn, .blue, .lighten-2, .waves-effect, .waves-light;
-  color: #fff;
+@mixin post_header_icon(){
+  position: relative;
+  height: $post_header_height;
+  margin-bottom: 10px;
+  &-icon {
+    position: absolute;
+    top: -6px;
+    transform: translateX(-30%);
+  }
+}
+
+@mixin modal_post_icon(){
+  position: relative;
+  height: 100%;
+  margin-bottom: 10px;
+  &-icon {
+    position: absolute;
+    transform: translateX(-30%) translateY(-20%);
+  }
 }

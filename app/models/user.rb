@@ -3,7 +3,21 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_one_attached :avatar
-  # validatable :avatar, 
+
+  validates :name, presence: true
+  with_options on: :create? do
+    validate :create_validate_avatar
+  end
+
+  # binding.pry
+  def create_validate_avatar
+    # binding.pry
+    return unless avatar.attached?
+    if name.blank? || password.blank? || password_confirmation.blank?
+      avatar.purge
+    end
+  end
+
 end

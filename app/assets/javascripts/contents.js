@@ -7,9 +7,15 @@ $(function () {
     M.Modal._count = 0;
     var modal_elems = document.querySelectorAll('.modal');
     var modal_instances = M.Modal.init(modal_elems);
+
+    var tooltipped_elems = document.querySelectorAll('.tooltipped');
+    var tooltipped_instances = M.Tooltip.init(tooltipped_elems);
   });
 
-  
+  $(document).on("turbolinks:before-cache", function () {
+    M.AutoInit();
+  });
+
 })
 
 

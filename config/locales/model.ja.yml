@@ -1,6 +1,7 @@
 ja:
   activerecord:
     models:
+      user: アカウント
     attributes:
       user:
         name: 名前

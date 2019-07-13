@@ -17,6 +17,16 @@
   display: none;
 }
 
+.pagination {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.default-btn {
+  @extend .btn, .blue, .lighten-2, .waves-effect, .waves-light;
+  color: #fff;
+}
+
 @import "modules/header";
 @import "modules/posts";
 @import "modules/devise";

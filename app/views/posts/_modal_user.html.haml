@@ -1,0 +1,23 @@
+%div{id: "user_modal_#{modal_user.id}", class: "modal modal-fixed-footer"}
+  .modal-content
+    .post__user--title.avatar.blue.lighten-2
+      - if modal_user.avatar.attached?
+        = image_tag modal_user.avatar, class: 'avatar-icon btn-floating btn-large'
+      - else
+        .avatar-icon.btn-floating.btn-large=modal_user.name
+      %h4{class: 'post__user--username'}="#{modal_user.name}"
+    .divider
+    %table
+      %tr
+        %th="Eメール"
+        %td="#{modal_user.email}"
+      %tr
+        %th="アカウント作成日"
+        %td="#{modal_user.created_at}"
+      %tr
+        %th="投稿数"
+        %td="#{Post.post_count(modal_user.id)}"
+  .modal-footer
+    = link_to '閉じる', '#!', class: "modal-close btn-flat"
+    - if modal_user.id === current_user.id
+      = link_to "アカウント編集", edit_user_registration_path, class: 'default-btn'

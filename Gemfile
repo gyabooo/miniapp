@@ -64,7 +64,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # add
 gem 'devise'
-gem 'kaminari'
+# gem 'kaminari'
 gem 'mysql2'
 gem 'haml-rails'
 gem 'devise-i18n'
@@ -75,3 +75,4 @@ gem "material_icons"
 gem 'mini_magick', '~> 4.8'
 # gem 'cropper-rails'
 gem 'jquery-rails'
+gem 'will_paginate'

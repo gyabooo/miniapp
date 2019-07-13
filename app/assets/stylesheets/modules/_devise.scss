@@ -6,9 +6,15 @@
   color: red;
   h2 {
     margin-bottom: 5px;
-    font-size: 24px;
+    font-size: 20px;
   }
   li {
     font-size: 12px;
+  }
+}
+
+.card {
+  &--medium{
+    width: 600px;
   }
 }
