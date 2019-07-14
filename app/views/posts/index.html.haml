@@ -2,5 +2,4 @@
 %article{class: "posts"}
   .row
     = render @posts
-    = render partial: 'modal_user', collection: User.all
 = will_paginate @posts, renderer: @custom_paginate_renderer

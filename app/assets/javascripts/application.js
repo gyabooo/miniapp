@@ -15,4 +15,5 @@
 //= require activestorage
 //= require turbolinks
 //= require jquery
+//= require froala_editor.min.js
 //= require_tree .

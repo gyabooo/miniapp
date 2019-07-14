@@ -21,7 +21,7 @@
             %li{class: "header__btn header__btn--edit"}
               = link_to "アカウント編集", edit_user_registration_path
             %li{class: "header__btn header__btn--new"}
-              = link_to "新規投稿", new_post_path
+              = link_to "新規投稿", new_post_path, "data-turbolinks": "false"
           - else
             %li{class: "header__btn header__btn--signin"}
               = link_to "ログイン", new_user_session_path
@@ -39,5 +39,6 @@
         - else
           %ul{class: "right header__user-containar"}
             %li{class: 'header__username'}="ゲスト"
-      = render 'shared/flash'
+      = render partial: 'shared/flash'
+      = render partial: 'layouts/modal_user', collection: User.all
       = yield

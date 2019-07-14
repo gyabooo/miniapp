@@ -12,6 +12,7 @@ $(function () {
     var tooltipped_instances = M.Tooltip.init(tooltipped_elems);
 
     $(".flash-msg").delay(1500).fadeOut(1000);
+    // var editor = new FroalaEditor('#post_text', { language: 'es'})
   });
 
   $(document).on("turbolinks:before-cache", function () {

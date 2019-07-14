@@ -1,0 +1,14 @@
+.container
+  .card
+    .card-content
+      %h2{class: "card-title"}="#{render_name}"
+      = form_for @post do |f|
+        .divider
+        .input-field
+          = f.label :title
+          = f.text_field :title, autofocus: true, autocomplete: "title"
+        .field.post_text_box
+          = f.label :text
+          = f.text_area :text, autofocus: true, autocomplete: "text", class: "post--textarea"
+        = f.submit "#{render_name}", class: 'default-btn'
+        = link_to "戻る", :back, class: 'btn-small'

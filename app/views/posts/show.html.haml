@@ -4,4 +4,5 @@
       .post__detail--title=@post.title
       .post__detail--date=@post.created_at.strftime("%Y/%m/%d(%a) %H:%M:%S")
       .divider
-      .post__detail--text=simple_format(h(@post.text))
+      .post__detail--text=raw(@post.text)
+  = link_to "戻る", :back, class: 'btn-small'

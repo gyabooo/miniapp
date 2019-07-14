@@ -12,7 +12,7 @@
         = link_to post_path(post), class: 'btn-floating light-blue lighten-2 tooltipped', "data-position": "right", "data-tooltip": "詳細" do
           %i{class: 'material-icons'} description
         - if user_signed_in? && post.user_id == current_user.id
-          = link_to edit_post_path(post), class: 'btn-floating yellow darken-1 tooltipped', "data-position": "right", "data-tooltip": "編集" do
+          = link_to edit_post_path(post), class: 'btn-floating yellow darken-1 tooltipped', "data-position": "right", "data-tooltip": "編集", "data-turbolinks": "false" do
             %i{class: 'material-icons'} edit
           = link_to "#destroy_modal_#{post.id}", class: 'btn-floating red lighten-2 modal-trigger tooltipped', "data-position": "right", "data-tooltip": "削除" do
             %i{class: 'material-icons'} delete
@@ -22,9 +22,9 @@
           %p="#{post.title}"
       .card-content
         - if post.text.scan("\n").count > 1
-          .post__text=simple_format(h(post.text.split("\n")[0])) + "\n...more"
+          .post__text=raw((post.text.split("\n")[0])) + "\n...more"
         - else
-          .post__text=simple_format(h(post.text).truncate(20, omission: "\n...more"))
+          .post__text=raw((post.text).truncate(20, omission: "\n...more"))
       .card-footer
         .post__date.blue-grey-text.text-lighten-3="#{post.created_at.strftime("%Y/%m/%d(%a) %H:%M:%S")}"
 
@@ -33,7 +33,7 @@
           %h4="本当に削除しますか？"
           .post__title=post.title
           .divider
-          .post__text=simple_format(post.text)
+          .post__text=raw(post.text)
         .modal-footer
           = link_to 'キャンセル', '#!', class: "modal-close btn-flat"
           = link_to "削除", "/posts/#{post.id}", method: :delete, class: 'red default-btn'

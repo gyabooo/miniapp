@@ -1,13 +1,1 @@
-.container
-  .card
-    .card-content
-      %h2{class: "card-title"} 編集
-      = form_with model: @post do |f|
-        .divider
-        .input-field
-          = f.label :title
-          = f.text_field :title, autofocus: true, autocomplete: "title"
-        .field
-          = f.label :text
-          = f.text_area :text, autofocus: true, autocomplete: "text", class: "post--textarea"
-        = f.submit '更新', class: 'default-btn'
+= render partial: 'form', locals: {render_name: '編集'}

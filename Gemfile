@@ -40,6 +40,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
+  gem 'seed_dump'
 end
 
 group :development do
@@ -76,3 +77,4 @@ gem 'mini_magick', '~> 4.8'
 # gem 'cropper-rails'
 gem 'jquery-rails'
 gem 'will_paginate'
+gem 'wysiwyg-rails'

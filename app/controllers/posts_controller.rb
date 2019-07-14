@@ -8,20 +8,16 @@ class PostsController < ApplicationController
     @custom_paginate_renderer = custom_paginate_renderer
   end
 
-  # def show
-  # end
+  def show
+  end
 
-  # def edit
-  # end
+  def edit
+  end
 
   def update
-    # @post = @post(create_params)
-    # binding.pry
-    if @post.update_attributes(create_params)
-      # binding.pry
+    if @post.update(create_params)
       redirect_to root_path, notice: '更新に成功しました'
     else
-      # binding.pry
       flash.now[:alert] = '更新に失敗しました'
       render :edit
     end
@@ -33,12 +29,9 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(create_params)
-    # binding.pry
     if @post.save
-      # binding.pry
       redirect_to root_path, notice: '投稿に成功しました'
     else
-      # binding.pry
       flash.now[:alert] = '投稿に失敗しました'
       render :new
     end
@@ -46,10 +39,8 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      # binding.pry
       redirect_to root_path, notice: '記事の削除に成功しました'
     else
-      # binding.pry
       flash.now[:alert] = '記事の削除に失敗しました'
       render :index
     end
